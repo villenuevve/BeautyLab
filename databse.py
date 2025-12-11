@@ -22,27 +22,17 @@ CREATE TABLE IF NOT EXISTS Role (
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS User (
     UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+    RoleID INTEGER NOT NULL,
     firstName TEXT NOT NULL,
     lastName TEXT NOT NULL,
     phone TEXT,
     email TEXT UNIQUE,
     password TEXT NOT NULL,
-    createdAt TEXT NOT NULL
+    createdAt TEXT NOT NULL,
+    FOREIGN KEY (RoleID) REFERENCES Role(RoleID)
 );
 """)
 
-# ============================
-#  UserRole (зв’язок M:N)
-# ============================
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS UserRole (
-    UserRoleID INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserID INTEGER NOT NULL,
-    RoleID INTEGER NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
-    FOREIGN KEY (RoleID) REFERENCES Role(RoleID) ON DELETE CASCADE
-);
-""")
 
 # ============================
 #  КЛІЄНТ (1:1 з User)
